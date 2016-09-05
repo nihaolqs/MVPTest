@@ -12,4 +12,5 @@ public interface IBannerPresenter {
     IBannerModel getBannerModel();
     void BannerOnclick(Video video);
     void autoRun();
+    void replaceData();
 }

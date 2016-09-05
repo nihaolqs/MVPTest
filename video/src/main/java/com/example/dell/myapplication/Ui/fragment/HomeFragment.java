@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dell.myapplication.bean.Video;
+import com.example.dell.myapplication.presenter.IBannerPresenter;
+import com.example.dell.myapplication.presenter.IVideoListPresenter;
 import com.example.dell.myapplication.view.IBannerView;
 import com.example.dell.myapplication.view.IVideoListView;
 
@@ -29,7 +31,17 @@ public class HomeFragment extends Fragment implements IBannerView, IVideoListVie
     }
 
     @Override
+    public IBannerPresenter getBannerPresenter() {
+        return null;
+    }
+
+    @Override
     public void showVideoList(List<Video> videoList) {
 
+    }
+
+    @Override
+    public IVideoListPresenter getVideoListPresenter() {
+        return null;
     }
 }

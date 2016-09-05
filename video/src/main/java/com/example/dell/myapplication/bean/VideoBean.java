@@ -3,7 +3,7 @@ package com.example.dell.myapplication.bean;
 /**
  * Created by dell on 2016/9/5.
  */
-public class Video {
+public class VideoBean {
     private int id;  //视频ＩＤ
     private int cid; //频道
     private String url; //视频地址
@@ -77,17 +77,4 @@ public class Video {
         this.comment = comment;
     }
 }
-
-
-//        "video": {
-//        "id": "22",
-//        "cid": "4",
-//        "url": "http://dd.wgwee.xyz:8823/video/10.mp4",
-//        "face": "http://app.jeoib.com:8092/bao/ll_0112.jpg",
-//        "title": "美女战士受虐",
-//        "flag": "0",
-//        "like": 21,
-//        "share": 9,
-//        "comment": 34
-//        },
 

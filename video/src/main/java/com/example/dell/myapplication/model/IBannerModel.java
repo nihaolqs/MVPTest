@@ -1,6 +1,6 @@
 package com.example.dell.myapplication.model;
 
-import com.example.dell.myapplication.bean.Video;
+import com.example.dell.myapplication.bean.VideoBean;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * Created by dell on 2016/9/5.
  */
 public interface IBannerModel {
-    List<Video> getBannerList();
+    List<VideoBean> getBannerList();
 }

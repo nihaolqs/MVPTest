@@ -10,4 +10,5 @@ public interface IVideoListPresenter {
     IVideoListView getVideoListView();
     IVideoListModel getVideoListModel();
     void videoOnclick();
+    void replaceData();
 }
