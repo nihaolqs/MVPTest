@@ -24,7 +24,9 @@ public class HttpUtil {
     public static void LolderImage(Context context,ImageView imageView,String imageUrl)
     {
         ImageLoader imageLoader = MyImageLoader.getInstance(context);
+        int width = imageView.getWidth();
+        int height = imageView.getHeight();
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        imageLoader.get(imageUrl,imageListener);
+        imageLoader.get(imageUrl,imageListener, width, height);
     }
 }
