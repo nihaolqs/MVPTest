@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.dell.myapplication.bean.Video;
+import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.presenter.IBannerPresenter;
 import com.example.dell.myapplication.presenter.IVideoListPresenter;
 import com.example.dell.myapplication.view.IBannerView;
@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment implements IBannerView, IVideoListVie
     }
 
     @Override
-    public void showBanner(List<Video> videoList) {
+    public void showBanner(List<VideoBean> videoList) {
 
     }
 
@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment implements IBannerView, IVideoListVie
     }
 
     @Override
-    public void showVideoList(List<Video> videoList) {
+    public void showVideoList(List<VideoBean> videoList) {
 
     }
 

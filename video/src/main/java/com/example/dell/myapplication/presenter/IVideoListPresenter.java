@@ -1,5 +1,6 @@
 package com.example.dell.myapplication.presenter;
 
+import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.model.IVideoListModel;
 import com.example.dell.myapplication.view.IVideoListView;
 
@@ -9,6 +10,6 @@ import com.example.dell.myapplication.view.IVideoListView;
 public interface IVideoListPresenter {
     IVideoListView getVideoListView();
     IVideoListModel getVideoListModel();
-    void videoOnclick();
+    void listVideoOnclick(VideoBean video);
     void replaceData();
 }

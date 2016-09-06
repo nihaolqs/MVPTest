@@ -1,6 +1,6 @@
 package com.example.dell.myapplication.presenter;
 
-import com.example.dell.myapplication.bean.Video;
+import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.model.IBannerModel;
 import com.example.dell.myapplication.view.IBannerView;
 
@@ -10,7 +10,7 @@ import com.example.dell.myapplication.view.IBannerView;
 public interface IBannerPresenter {
     IBannerView getBannerView();
     IBannerModel getBannerModel();
-    void BannerOnclick(Video video);
+    void BannerOnclick(VideoBean video);
     void autoRun();
     void replaceData();
 }

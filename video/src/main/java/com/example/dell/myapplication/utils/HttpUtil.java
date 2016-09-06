@@ -14,7 +14,7 @@ import com.example.dell.myapplication.R;
  * Volley网络请求封装方法
  */
 public class HttpUtil {
-    public static void httpStringGetReques(Context context,String url,HttpResponseListener listener)
+    public static <S> void httpStringGetReques(Context context,String url,HttpResponseListener<S> listener)
     {
         RequestQueue requestQueue = HttpRequestQueue.getInstance(context).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url, listener, listener);

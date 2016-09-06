@@ -8,8 +8,7 @@ import com.example.dell.myapplication.app.Constants;
 import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.utils.HttpResponseListener;
 import com.example.dell.myapplication.utils.HttpUtil;
-
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ import java.util.List;
 public class HomeFragmentModel implements IBannerModel, IVideoListModel{
 
     private Context mContext;
+    private HomeFragmentData mData;
 
     public HomeFragmentModel(Context context)
     {
@@ -26,26 +26,28 @@ public class HomeFragmentModel implements IBannerModel, IVideoListModel{
     }
     @Override
     public List<VideoBean> getBannerList() {
-        return null;
+        return this.mData.getBanner();
     }
 
     @Override
     public List<VideoBean> getVideoList() {
-        return null;
+        return this.mData.getVideos();
     }
 
     public void replaceData()
     {
         String urlStr = Constants.ApiCline.VIDEO_HOME;
-        HttpResponseListener listener = new HttpResponseListener() {
+        HttpResponseListener<String> listener = new HttpResponseListener<String>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(mContext,volleyError.getMessage(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onResponse(Object o) {
-
+            public void onResponse(String o) {
+                Gson gson = new Gson();
+                HomeFragmentData data = gson.fromJson(o, HomeFragmentData.class);
+                HomeFragmentModel.this.mData = data;
             }
         };
         HttpUtil.httpStringGetReques(mContext,urlStr,listener);
