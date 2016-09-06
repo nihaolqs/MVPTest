@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by dell on 2016/9/6.
  */
-public class VideoDetailData {
+public class VideoDetailFragmentData {
 
     /**
      * id : 20
