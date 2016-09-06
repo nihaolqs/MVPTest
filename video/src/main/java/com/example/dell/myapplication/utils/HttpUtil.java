@@ -14,7 +14,7 @@ import com.example.dell.myapplication.R;
  * Volley网络请求封装方法
  */
 public class HttpUtil {
-    public static <S> void httpStringGetReques(Context context,String url,HttpResponseListener<S> listener)
+    public static void httpStringGetReques(Context context,String url,HttpResponseListener<String> listener)
     {
         RequestQueue requestQueue = HttpRequestQueue.getInstance(context).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url, listener, listener);
@@ -29,4 +29,5 @@ public class HttpUtil {
         ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(imageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
         imageLoader.get(imageUrl,imageListener, width, height);
     }
+
 }

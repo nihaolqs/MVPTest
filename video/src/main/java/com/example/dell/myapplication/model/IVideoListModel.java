@@ -1,6 +1,7 @@
 package com.example.dell.myapplication.model;
 
 import com.example.dell.myapplication.bean.VideoBean;
+import com.example.dell.myapplication.utils.IHttpRequesedListener;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface IVideoListModel {
     List<VideoBean> getVideoList();
-    void replaceData();
+    void replaceData(IHttpRequesedListener httpRequesedListener);
 }
