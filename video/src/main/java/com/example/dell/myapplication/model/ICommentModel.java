@@ -1,6 +1,7 @@
 package com.example.dell.myapplication.model;
 
 import com.example.dell.myapplication.bean.CommentBean;
+import com.example.dell.myapplication.utils.IHttpRequesedListener;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface ICommentModel {
     List<CommentBean> getComments();
-    void replaceData();
+    void replaceData(int id, IHttpRequesedListener httpRequesedListener);
 }

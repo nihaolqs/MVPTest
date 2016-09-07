@@ -1,0 +1,8 @@
+package com.example.dell.myapplication.utils;
+
+/**
+ * Created by lin on 2016/9/7.
+ */
+public interface IHttpRequesedListener {
+    void requesed();
+}

@@ -8,6 +8,7 @@ import com.example.dell.myapplication.app.Constants;
 import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.utils.HttpResponseListener;
 import com.example.dell.myapplication.utils.HttpUtil;
+import com.example.dell.myapplication.utils.IHttpRequesedListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class HomeFragmentModel implements IBannerModel, IVideoListModel{
         return this.mData.getVideos();
     }
 
-    public void replaceData()
+    public void replaceData(final IHttpRequesedListener httpRequesedListener)
     {
         String urlStr = Constants.ApiCline.VIDEO_HOME;
         HttpResponseListener<String> listener = new HttpResponseListener<String>() {
@@ -48,6 +49,7 @@ public class HomeFragmentModel implements IBannerModel, IVideoListModel{
                 Gson gson = new Gson();
                 HomeFragmentData data = gson.fromJson(o, HomeFragmentData.class);
                 HomeFragmentModel.this.mData = data;
+                httpRequesedListener.requesed();    //回调方式处理时机问题
             }
         };
         HttpUtil.httpStringGetReques(mContext,urlStr,listener);

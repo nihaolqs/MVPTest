@@ -7,6 +7,7 @@ import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.model.HomeFragmentModel;
 import com.example.dell.myapplication.model.IBannerModel;
 import com.example.dell.myapplication.model.IVideoListModel;
+import com.example.dell.myapplication.utils.IHttpRequesedListener;
 import com.example.dell.myapplication.view.IBannerView;
 import com.example.dell.myapplication.view.IVideoListView;
 
@@ -31,7 +32,7 @@ public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresen
 
     @Override
     public void BannerOnclick(VideoBean video) {
-
+        showVideoDetail(video);
     }
 
     @Override
@@ -53,14 +54,18 @@ public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresen
 
     @Override
     public void listVideoOnclick(VideoBean video) {
-
+        showVideoDetail(video);
     }
 
     @Override
     public void replaceData() {    //共有方法
-        model.replaceData();
-        homeFragment.showBanner(getBannerModel().getBannerList());
-        homeFragment.showVideoList(getVideoListModel().getVideoList());
+        model.replaceData(new IHttpRequesedListener() {
+            @Override
+            public void requesed() {
+                homeFragment.showBanner(getBannerModel().getBannerList());
+                homeFragment.showVideoList(getVideoListModel().getVideoList());
+            }
+        });
     }
 
     private void showVideoDetail(VideoBean videoBean)
