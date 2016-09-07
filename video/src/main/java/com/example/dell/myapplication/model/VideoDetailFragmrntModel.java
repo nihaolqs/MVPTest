@@ -9,9 +9,11 @@ import java.util.List;
  * Created by dell on 2016/9/6.
  */
 public class VideoDetailFragmrntModel implements ICommentModel, IVideoDetailModel{
+
+    private VideoDetailFragmentData mData;
     @Override
     public List<CommentBean> getComments() {
-        return null;
+        return this.mData.getComments();
     }
 
     @Override
@@ -21,6 +23,6 @@ public class VideoDetailFragmrntModel implements ICommentModel, IVideoDetailMode
 
     @Override
     public VideoBean getVideoDetail() {
-        return null;
+        return this.mData.getVideo();
     }
 }
