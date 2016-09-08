@@ -9,4 +9,5 @@ import com.example.dell.myapplication.view.IVideoDetailView;
 public interface IVideoDetailPresenter {
     IVideoDetailModel getVideoDetailModel();
     IVideoDetailView getVideoDetailView();
+    void replaceData(int id);
 }

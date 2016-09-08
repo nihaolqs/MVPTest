@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by dell on 2016/9/6.
  */
-public class VideoDetailFragmrntModel implements ICommentModel, IVideoDetailModel{
+public class VideoDetailFragmrntModel implements IVideoDetailFragmentModel{
 
     private VideoDetailFragmentData mVideoDetailFragmentData;
     private Context mContext;

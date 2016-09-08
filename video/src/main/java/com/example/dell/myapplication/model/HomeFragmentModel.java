@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by dell on 2016/9/5.
  */
-public class HomeFragmentModel implements IBannerModel, IVideoListModel{
+public class HomeFragmentModel implements IHomeFragmentModel{
 
     private Context mContext;
     private HomeFragmentData mData;

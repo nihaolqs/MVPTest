@@ -9,5 +9,5 @@ import com.example.dell.myapplication.view.ICommentView;
 public interface ICommentPresenter {
     ICommentView getCommentView();
     ICommentModel getCommentModel();
-    void replaceData();
+    void replaceData(int id);
 }

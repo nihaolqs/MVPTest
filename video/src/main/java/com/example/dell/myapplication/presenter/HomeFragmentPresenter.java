@@ -6,6 +6,7 @@ import com.example.dell.myapplication.Ui.fragment.HomeFragment;
 import com.example.dell.myapplication.bean.VideoBean;
 import com.example.dell.myapplication.model.HomeFragmentModel;
 import com.example.dell.myapplication.model.IBannerModel;
+import com.example.dell.myapplication.model.IHomeFragmentModel;
 import com.example.dell.myapplication.model.IVideoListModel;
 import com.example.dell.myapplication.utils.IHttpRequesedListener;
 import com.example.dell.myapplication.view.IBannerView;
@@ -16,13 +17,18 @@ import com.example.dell.myapplication.view.IVideoListView;
  */
 public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresenter{
 
+    /* 会产生耦合问题
     private HomeFragmentModel model;    //实现了IBannerModel 和 IListVideoModel
     private HomeFragment homeFragment;  //实现了IBannerView 和 IListVideoView
+*/
+    private IHomeFragmentModel model;
+    private IBannerView bannerView;
+    private IVideoListView videoListView;
 
     //以下为IBannerPresenter方法
     @Override
     public IBannerView getBannerView() {
-        return homeFragment;
+        return bannerView;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresen
 
     @Override
     public IVideoListView getVideoListView() {
-        return homeFragment;
+        return videoListView;
     }
 
     @Override
@@ -62,8 +68,8 @@ public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresen
         model.replaceData(new IHttpRequesedListener() {
             @Override
             public void requesed() {
-                homeFragment.showBanner(getBannerModel().getBannerList());
-                homeFragment.showVideoList(getVideoListModel().getVideoList());
+                bannerView.showBanner(getBannerModel().getBannerList());
+                videoListView.showVideoList(getVideoListModel().getVideoList());
             }
         });
     }
