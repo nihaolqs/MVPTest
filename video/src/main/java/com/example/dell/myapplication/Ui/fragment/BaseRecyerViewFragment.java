@@ -11,8 +11,8 @@ import android.view.ViewGroup;
  * Created by dell on 2016/9/8.
  */
 public abstract class BaseRecyerViewFragment extends Fragment{
-    private LayoutInflater mInflater;
-    private View mLayout;
+    protected LayoutInflater mInflater;
+    protected View mLayout;
 
     @Nullable
     @Override
@@ -31,6 +31,10 @@ public abstract class BaseRecyerViewFragment extends Fragment{
 
     public View getLayout() {
         return mLayout;
+    }
+
+    public LayoutInflater getInflater(){
+        return mInflater;
     }
 
     public abstract int getFragmentLayoutResurce();

@@ -2,10 +2,10 @@ package com.example.dell.myapplication.widget.viewpage_widget;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by dell on 2016/9/8.
  */
-public abstract class BaseViewPage extends Fragment{
+public abstract class BaseViewPage extends Fragment implements ViewPager.OnPageChangeListener {
 
     public static final int MULTI = 10000;
     private int anInt;
@@ -29,6 +29,9 @@ public abstract class BaseViewPage extends Fragment{
     private View mLayout;
     private ViewPager viewPage;
     private List<IViewPageData> mList = new ArrayList<>();
+
+    private boolean isAutoRunOpen;
+    private boolean isUserDrag;
 
     public BaseViewPage(Context context)
     {
@@ -56,6 +59,31 @@ public abstract class BaseViewPage extends Fragment{
     protected void initBanner()   //如果是Banner时进行进一步的处理
     {
         viewPage.setCurrentItem(mList.size()/2);
+        if(isAutoRun())
+        {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(isAutoRunOpen&&!isUserDrag) {
+                        int currentItem = viewPage.getCurrentItem();
+                        currentItem++;
+                        viewPage.setCurrentItem(currentItem);
+                    }
+                    handler.postDelayed(this,3000);
+                }
+            },3000);
+            viewPage.addOnPageChangeListener(this);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        if(state == ViewPager.SCROLL_STATE_DRAGGING){
+            isUserDrag = true;
+        }else if(state == ViewPager.SCROLL_STATE_SETTLING){
+            isUserDrag =false;
+        }
     }
 
     class MyPageAdapter extends FragmentStatePagerAdapter {
@@ -92,4 +120,9 @@ public abstract class BaseViewPage extends Fragment{
     protected abstract boolean isBanner();  //判断是否是Banner的钩子方法
 
     protected abstract boolean isAutoRun();  //是否要自动滚动的
+
+    protected void setIsAutoRunOpen(boolean isOpen)
+    {
+        this.isAutoRunOpen = isOpen;
+    }
 }
