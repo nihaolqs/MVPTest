@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dell.myapplication.widget.viewpage_widget.BaseFragment;
+
 /**
  * Created by dell on 2016/9/8.
  */
-public abstract class BaseRecyerViewFragment extends Fragment{
+public abstract class BaseRecyerViewFragment extends BaseFragment{
     protected LayoutInflater mInflater;
     protected View mLayout;
 

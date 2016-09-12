@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by dell on 2016/9/8.
+ * 模板方法设计
  */
 public abstract class BaseViewPage extends Fragment implements ViewPager.OnPageChangeListener {
 
@@ -113,9 +114,9 @@ public abstract class BaseViewPage extends Fragment implements ViewPager.OnPageC
 
     /**
      * @param  data
-     * @return Fragment 可通过继承抽象类ApageFragment快速实现
+     * @return Fragment 可通过继承抽象类BaseFragment快速实现
      */
-    protected abstract Fragment getPageFragment(IViewPageData data);
+    protected abstract BaseFragment getPageFragment(IViewPageData data);
 
     protected abstract boolean isBanner();  //判断是否是Banner的钩子方法
 

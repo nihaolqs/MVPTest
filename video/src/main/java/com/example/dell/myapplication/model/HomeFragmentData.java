@@ -2,12 +2,13 @@ package com.example.dell.myapplication.model;
 
 import com.example.dell.myapplication.bean.VideoBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by dell on 2016/9/5.
  */
-public class HomeFragmentData {
+public class HomeFragmentData implements Serializable {
 
     /**
      * id : 1
