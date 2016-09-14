@@ -11,14 +11,14 @@ import java.io.Serializable;
 
 /**
  * Created by dell on 2016/9/8.
- * @param S 附加数据类型
+ *  S 附加数据类型
  */
 public abstract  class BaseFragment<S extends Serializable> extends Fragment{
 
-    private View mLayout;
-    private S mDate;
+    protected View mLayout;
+    protected S mDate;
     private int mPageResour;
-    public static final String BUNDLE_KEY= "bundle_key";
+//    public static final String BUNDLE_KEY= "bundle_key";
 
     public BaseFragment()
     {
@@ -40,13 +40,10 @@ public abstract  class BaseFragment<S extends Serializable> extends Fragment{
      */
     protected  void initData(){
         Bundle bundle = getArguments();
-        S o = (S) bundle.get(BUNDLE_KEY);
+        S o = (S) bundle.get(FragmentFactory.BUNDLE_KEY);
         this.mDate = o;
     }
 
-    protected void initData(Class<S> SClass){
-
-    }
 
     /**
      * 初始化UI
@@ -56,30 +53,34 @@ public abstract  class BaseFragment<S extends Serializable> extends Fragment{
     public abstract void initUi(S data,View layout);
 
     /**
-     *
+     *  备注
      * @param tClass BaseFragment的子类
      * @param data  附加数据可以为NULL 多参数通过容器导入
-     * @param T 泛型传入子类
+     * @param tClass 泛型传入子类
      * @return BaseFragment对象
      */
-    public static <T extends BaseFragment> BaseFragment getInstance(Class<T> tClass,Serializable data){
-        T t = null;
-        try {
-            t = tClass.newInstance();
-            Bundle bundle= new Bundle();
-            bundle.putSerializable(BUNDLE_KEY,data);
-            t.setArguments(bundle);
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return t;
-    }
+//    public static <T extends BaseFragment,S extends Serializable> BaseFragment getInstance(Class<T> tClass,S data){
+//        T t = null;
+//        try {
+//            t = tClass.newInstance();
+//            Bundle bundle= new Bundle();
+//            bundle.putSerializable(BUNDLE_KEY,data);
+//            t.setArguments(bundle);
+//        } catch (java.lang.InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//        return t;
+//    }
 
     /**
      *
      * @return 布局资源
      */
     protected abstract int getLauoutResour();
+
+    public View getLayout() {
+        return mLayout;
+    }
 }

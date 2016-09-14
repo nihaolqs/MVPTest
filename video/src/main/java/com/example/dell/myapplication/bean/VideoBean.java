@@ -1,9 +1,11 @@
 package com.example.dell.myapplication.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by dell on 2016/9/5.
  */
-public class VideoBean {
+public class VideoBean implements Serializable {
     private int id;  //视频ＩＤ
     private int cid; //频道
     private String url; //视频地址

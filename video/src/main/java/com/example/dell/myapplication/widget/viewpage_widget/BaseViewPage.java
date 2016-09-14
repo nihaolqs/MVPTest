@@ -1,129 +1,177 @@
 package com.example.dell.myapplication.widget.viewpage_widget;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.dell.myapplication.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by dell on 2016/9/8.
- * 模板方法设计
+ * Created by dell on 2016/9/13.
  */
-public abstract class BaseViewPage extends Fragment implements ViewPager.OnPageChangeListener {
 
-    public static final int MULTI = 10000;
-    private int anInt;
-    private Context mContext;
-    private View mLayout;
-    private ViewPager viewPage;
-    private List<IViewPageData> mList = new ArrayList<>();
+public abstract class BaseViewPage<T extends Serializable> extends BaseFragment<ArrayList<T>>{
+    protected ArrayList<T> mList = new ArrayList<>();
 
-    private boolean isAutoRunOpen;
-    private boolean isUserDrag;
+//    public static final int CARDINAL = 10000;  // 假如是Banner Page页面放大倍数
+    protected ViewPager mViewPage;
+    private MyFragmentPagerAdapter mFragmentPageAdapter;
+    protected IInitBanner mInitBanner;
+    private boolean isBanner;
+    private boolean isDragging;
+    private boolean isDestory;
 
-    public BaseViewPage(Context context)
-    {
-        mContext = context;
-    }
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mLayout = inflater.inflate(R.layout.layout_banner, null);
-        initUI();
-        return mLayout;
+    public void initUi(ArrayList<T> data, View layout) {
+         mList.addAll(data);
+         initViewPage();
     }
 
-    protected void initUI() {
-        viewPage = (ViewPager) mLayout.findViewById(R.id.banner_viewpage);
-        FragmentManager fm = getChildFragmentManager();
-        PagerAdapter adapter =new MyPageAdapter(fm);
-        viewPage.setAdapter(adapter);
-        if(isBanner())
+    protected void initViewPage(){
+        mViewPage = (ViewPager) getLayout().findViewById(getViewPageResour());
+        mFragmentPageAdapter = new MyFragmentPagerAdapter(getChildFragmentManager());
+        mViewPage.setAdapter(mFragmentPageAdapter);
+        if(isBanner)
         {
             initBanner();
         }
     }
 
-    protected void initBanner()   //如果是Banner时进行进一步的处理
-    {
-        viewPage.setCurrentItem(mList.size()/2);
-        if(isAutoRun())
-        {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(isAutoRunOpen&&!isUserDrag) {
-                        int currentItem = viewPage.getCurrentItem();
-                        currentItem++;
-                        viewPage.setCurrentItem(currentItem);
-                    }
-                    handler.postDelayed(this,3000);
+    /**
+     * 对Banner进行初始化
+     */
+    protected void initBanner(){
+        mViewPage.setCurrentItem(mList.size()*mInitBanner.CARDINAL/2);
+        bannerAutoRun();
+
+    }
+
+    private void bannerAutoRun() {
+        isDestory = false;
+        mViewPage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {  //是否用户拖拽的标记变量变更
+                switch (state)
+                {
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        isDragging = true;
+                        break;
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        isDragging = false;
+                        break;
+                    default:
+                        isDragging = false;
                 }
-            },3000);
-            viewPage.addOnPageChangeListener(this);
-        }
+            }
+        });
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!isDestory) {
+                    if (!isDragging) {
+                        int currentItem = mViewPage.getCurrentItem();
+                        currentItem++;
+                        mViewPage.setCurrentItem(currentItem);
+                    }
+                    handler.postDelayed(this, mInitBanner.getIntervalTime());
+                }
+            }
+        },mInitBanner.getIntervalTime());
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        if(state == ViewPager.SCROLL_STATE_DRAGGING){
-            isUserDrag = true;
-        }else if(state == ViewPager.SCROLL_STATE_SETTLING){
-            isUserDrag =false;
-        }
+    /**
+     * 返回布局资源,如果需要更改布局的话请重写该方法
+     * @return
+     */
+    protected int getLauoutResour() {
+        return R.layout.layout_banner;
     }
 
-    class MyPageAdapter extends FragmentStatePagerAdapter {
+    /**
+     * 返回ViewPage资源,如果需要更改布局的话请重写该方法
+     * @return
+     */
+    protected int getViewPageResour()
+    {
+        return R.id.banner_viewpage;
+    }
 
+    public class MyFragmentPagerAdapter extends FragmentStatePagerAdapter
+    {
 
-        public MyPageAdapter(FragmentManager fm) {
+        public MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public int getCount() {
-            if(isBanner())
-            {
-                anInt = mList.size() * MULTI;
-                return anInt;   //为了做循环二使用基数
-            }else{
-                return mList.size();
-            }
+        public Fragment getItem(int position) {
+            T t = mList.get(position);
+            BaseFragment<T> page = getPage(t);
+            return page;
         }
 
         @Override
-        public Fragment getItem(int position) {
-
-            return getPageFragment(mList.get(position%mList.size()));   //主要是为了考虑到有时候需要用在Banner上面的时候需要循环播放时的逻辑处理
+        public int getCount() {
+            int num = 1;
+            if(isBanner){
+                num = mInitBanner.CARDINAL;
+            }
+            return mList.size()*num;
         }
     }
 
     /**
-     * @param  data
-     * @return Fragment 可通过继承抽象类BaseFragment快速实现
+     * 返回子页面的方法
+     * @param t
+     * @return
      */
-    protected abstract BaseFragment getPageFragment(IViewPageData data);
+    protected abstract BaseFragment<T> getPage(T t);
 
-    protected abstract boolean isBanner();  //判断是否是Banner的钩子方法
+    /**
+     * 根据返回值切换是否是Banner如果是Banner需要进行部分逻辑处理
+     * @return
+     */
+//    protected abstract boolean isBanner();
 
-    protected abstract boolean isAutoRun();  //是否要自动滚动的
-
-    protected void setIsAutoRunOpen(boolean isOpen)
+    /**
+     * 当viewPage是banner的时候必须先调用
+     * @param InitBanner
+     */
+    public void setmInitBanner(IInitBanner InitBanner)
     {
-        this.isAutoRunOpen = isOpen;
+        this.isBanner = true;
+        this.mInitBanner = InitBanner;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isDestory = true;   //销毁后不应该滚动
+    }
+
+    public void rePlaceViewPage(List<T> dataList){  //跟新viewPage的方法
+        mList.clear();
+        mList.addAll(dataList);
+        mFragmentPageAdapter.notifyDataSetChanged();
     }
 }

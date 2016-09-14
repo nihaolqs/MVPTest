@@ -1,5 +1,6 @@
 package com.example.dell.myapplication.presenter;
 
+import android.content.Context;
 import android.provider.MediaStore;
 
 import com.example.dell.myapplication.Ui.fragment.HomeFragment;
@@ -18,12 +19,21 @@ import com.example.dell.myapplication.view.IVideoListView;
 public class HomeFragmentPresenter implements IBannerPresenter, IVideoListPresenter{
 
     /* 会产生耦合问题
-    private HomeFragmentModel model;    //实现了IBannerModel 和 IListVideoModel
-    private HomeFragment homeFragment;  //实现了IBannerView 和 IListVideoView
-*/
+        private HomeFragmentModel model;    //实现了IBannerModel 和 IListVideoModel
+        private HomeFragment homeFragment;  //实现了IBannerView 和 IListVideoView
+    */
     private IHomeFragmentModel model;
+    private final Context mContext;
     private IBannerView bannerView;
     private IVideoListView videoListView;
+
+    public HomeFragmentPresenter(Context context,IBannerView iBannerView, IVideoListView iVideoListView)
+    {
+        this.mContext = context;
+        this.bannerView = iBannerView;
+        this.videoListView = iVideoListView;
+        this.model = new HomeFragmentModel(mContext);
+    }
 
     //以下为IBannerPresenter方法
     @Override
