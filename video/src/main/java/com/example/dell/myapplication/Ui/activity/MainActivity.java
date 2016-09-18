@@ -1,4 +1,4 @@
-package com.example.dell.myapplication.Ui;
+package com.example.dell.myapplication.Ui.activity;
 
 
 import android.support.v4.app.Fragment;

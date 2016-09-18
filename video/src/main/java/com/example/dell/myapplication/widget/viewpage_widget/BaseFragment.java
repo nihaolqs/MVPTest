@@ -18,17 +18,18 @@ public abstract  class BaseFragment<S extends Serializable> extends Fragment{
     protected View mLayout;
     protected S mDate;
     private int mPageResour;
+    protected LayoutInflater mInflater;
 //    public static final String BUNDLE_KEY= "bundle_key";
 
     public BaseFragment()
     {
-        this.mPageResour = getLauoutResour();
+        this.mPageResour = getLayoutResour();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        this.mInflater = inflater;
         mLayout = inflater.inflate(mPageResour, null);
         initData();
         initUi(mDate,mLayout);
@@ -78,7 +79,7 @@ public abstract  class BaseFragment<S extends Serializable> extends Fragment{
      *
      * @return 布局资源
      */
-    protected abstract int getLauoutResour();
+    protected abstract int getLayoutResour();
 
     public View getLayout() {
         return mLayout;

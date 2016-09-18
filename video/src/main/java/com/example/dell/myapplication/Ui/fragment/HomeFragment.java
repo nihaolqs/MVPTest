@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
@@ -20,6 +21,7 @@ import com.example.dell.myapplication.view.IBannerView;
 import com.example.dell.myapplication.view.IVideoListView;
 import com.example.dell.myapplication.widget.viewpage_widget.BaseFragment;
 import com.example.dell.myapplication.widget.viewpage_widget.FragmentFactory;
+import com.example.dell.myapplication.widget.viewpage_widget.IInitBanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +47,24 @@ public class HomeFragment extends BaseFragment<HomeFragmentData> implements IBan
 
     private void initRecyclerView() {
         mAdatpter = new HomeFragmentAdatpter(getContext(), mList);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.HORIZONTAL));
+        //TODO 暂时注销
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
         RecyclerViewHeader recyclerViewHeader = RecyclerViewHeader.fromXml(getContext(), R.layout.layout_header);
+
+        mRecyclerView.setAdapter(mAdatpter);
+        recyclerViewHeader.attachTo(mRecyclerView);
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         mHomeBannerFragment = FragmentFactory.getFragment(HomeBannerFragment.class, mBannerList);
-//        ft.replace(R.id.fl_header, mHomeBannerFragment);
+        mHomeBannerFragment.setmInitBanner(new IInitBanner() {
+            @Override
+            public int getIntervalTime() {
+                return 3000;
+            }
+        });
+        ft.replace(R.id.fl_header, mHomeBannerFragment);
         ft.commit();
-        mRecyclerView.setAdapter(mAdatpter);
-//        recyclerViewHeader.attachTo(mRecyclerView);
+        mHomeFragmentPresenter.replaceData();
     }
 
     private void initFindView( View layout) {
@@ -79,6 +90,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentData> implements IBan
     public void showVideoList(List<VideoBean> videoList) {
         mList.clear();
         mList.addAll(videoList);
+//        Log.e("showVideoList",""+mList.toString());
         mAdatpter.notifyDataSetChanged();
     }
 
@@ -91,6 +103,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentData> implements IBan
     protected void initData() {
         super.initData();
         mHomeFragmentPresenter = new HomeFragmentPresenter(getContext(),this,this);
-        mHomeFragmentPresenter.replaceData();
+
     }
 }

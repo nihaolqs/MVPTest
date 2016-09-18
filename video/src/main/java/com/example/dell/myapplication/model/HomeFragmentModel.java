@@ -1,6 +1,7 @@
 package com.example.dell.myapplication.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -46,6 +47,7 @@ public class HomeFragmentModel implements IHomeFragmentModel{
 
             @Override
             public void onResponse(String o) {
+//                Log.e("HomeFragmentModel",o);  有下载数据
                 Gson gson = new Gson();
                 HomeFragmentData data = gson.fromJson(o, HomeFragmentData.class);
                 HomeFragmentModel.this.mData = data;

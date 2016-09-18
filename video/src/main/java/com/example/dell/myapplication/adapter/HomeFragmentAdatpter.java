@@ -2,6 +2,7 @@ package com.example.dell.myapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,13 +31,17 @@ public class HomeFragmentAdatpter extends BaseRecyclerViewAdapter<VideoListHolde
 
     @Override
     protected VideoListHolder setItemView2Holder(View itemView) {
-        return new VideoListHolder(itemView);
+        VideoListHolder videoListHolder = new VideoListHolder(itemView);
+
+        return videoListHolder;
     }
 
     @Override
     protected void initViewHolder(VideoListHolder holder, VideoBean data) {
         String title = data.getTitle();
         String face = data.getFace();
+        Log.e("initViewHolder",title);
+        holder.getmTvVideoTitle().setText(title);
         ImageView imageView = holder.getmIvVideoImage();
         HttpUtil.LolderImage(getmContext(),imageView,face);
 

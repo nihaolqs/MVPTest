@@ -1,11 +1,13 @@
 package com.example.dell.myapplication.widget.viewpage_widget;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import android.util.Log;
 import android.view.View;
 
 import com.example.dell.myapplication.R;
@@ -40,6 +42,7 @@ public abstract class BaseViewPage<T extends Serializable> extends BaseFragment<
         mViewPage = (ViewPager) getLayout().findViewById(getViewPageResour());
         mFragmentPageAdapter = new MyFragmentPagerAdapter(getChildFragmentManager());
         mViewPage.setAdapter(mFragmentPageAdapter);
+//        Log.e("mViewPagesetAdaptermFr","+++++++++++++++++++++++++++++++");
         if(isBanner)
         {
             initBanner();
@@ -125,7 +128,7 @@ public abstract class BaseViewPage<T extends Serializable> extends BaseFragment<
 
         @Override
         public Fragment getItem(int position) {
-            T t = mList.get(position);
+            T t = mList.get(position%mList.size());   //考虑到Banner循环的情况防止下标越界
             BaseFragment<T> page = getPage(t);
             return page;
         }
@@ -172,6 +175,9 @@ public abstract class BaseViewPage<T extends Serializable> extends BaseFragment<
     public void rePlaceViewPage(List<T> dataList){  //跟新viewPage的方法
         mList.clear();
         mList.addAll(dataList);
-        mFragmentPageAdapter.notifyDataSetChanged();
+        Log.e("mFragmentPageAdapter",mFragmentPageAdapter + "");
+        if(mFragmentPageAdapter != null){
+            mFragmentPageAdapter.notifyDataSetChanged();
+        }
     }
 }

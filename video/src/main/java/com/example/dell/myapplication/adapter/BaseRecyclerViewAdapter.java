@@ -2,6 +2,7 @@ package com.example.dell.myapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,9 @@ public abstract class BaseRecyclerViewAdapter<T extends RecyclerView.ViewHolder,
     }
     @Override
     public T onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e("onCreateViewHolder","++++++++++++++++++++++++");
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View latyout = layoutInflater.inflate(getItemLayoutResoures(), parent);
+        View latyout = layoutInflater.inflate(getItemLayoutResoures(), parent,false);
 //        T t = getItemHolder(mTClass);
         T t = setItemView2Holder(latyout);
         return t;
@@ -41,6 +43,7 @@ public abstract class BaseRecyclerViewAdapter<T extends RecyclerView.ViewHolder,
 
     @Override
     public int getItemCount() {
+        Log.e("getItemCount","++++++++++++++++++++++++");
         return mDataList.size();
     }
 

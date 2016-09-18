@@ -1,5 +1,6 @@
 package com.example.dell.myapplication.Ui.fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ public class HomeBannerFragment extends BaseViewPage<VideoBean>{
         return FragmentFactory.getFragment(FragmentPage.class,videoBean);
     }
 
-    class FragmentPage extends BaseFragment<VideoBean>{
+    public static class FragmentPage extends BaseFragment<VideoBean>{
 
         private ImageView mIvVideoFace;
         private TextView mTvVideoTitle;
@@ -37,13 +38,20 @@ public class HomeBannerFragment extends BaseViewPage<VideoBean>{
         }
 
         private void showView(VideoBean data) {
-            mTvVideoTitle.setText(data.getTitle());
-            HttpUtil.LolderImage(getContext(),mIvVideoFace,data.getFace());
+            if(data != null){
+
+                mTvVideoTitle.setText(data.getTitle());
+                HttpUtil.LolderImage(getContext(),mIvVideoFace,data.getFace());
+            }
         }
 
         private void initFindView(View layout) {
             mIvVideoFace = (ImageView) layout.findViewById(R.id.iv_banner_video_face);
             mTvVideoTitle = (TextView) layout.findViewById(R.id.tv_banner_video_title);
+            Log.e("mTvVideoTitle",mTvVideoTitle +"");
+            Log.e("layout",layout +"");
+            Log.e("tv_banner_video_title",R.id.tv_banner_video_title +"");
+            Log.e("mIvVideoFace",mIvVideoFace+"");
         }
 
         @Override
