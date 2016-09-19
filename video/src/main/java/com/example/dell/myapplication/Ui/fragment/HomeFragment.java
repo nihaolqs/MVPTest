@@ -45,6 +45,11 @@ public class HomeFragment extends BaseFragment<HomeFragmentData> implements IBan
         initRecyclerView();
     }
 
+    @Override
+    protected int getLayoutResour() {
+        return R.layout.fragment_home;
+    }
+
     private void initRecyclerView() {
         mAdatpter = new HomeFragmentAdatpter(getContext(), mList);
         //TODO 暂时注销
@@ -71,7 +76,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentData> implements IBan
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.rcv_fhome_showvideolist);
     }
 
-    @Override
+
     protected int getLauoutResour() {
         return R.layout.fragment_home;
     }

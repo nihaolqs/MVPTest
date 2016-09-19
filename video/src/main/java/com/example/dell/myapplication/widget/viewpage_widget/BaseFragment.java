@@ -84,4 +84,10 @@ public abstract  class BaseFragment<S extends Serializable> extends Fragment{
     public View getLayout() {
         return mLayout;
     }
+
+
+    public LayoutInflater getInflater(){
+        return mInflater;
+    }
+
 }
